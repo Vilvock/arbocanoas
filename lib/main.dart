@@ -13,61 +13,61 @@ import 'config/notification_helper.dart';
 import 'config/preferences.dart';
 import 'config/useful.dart';
 
-// @pragma('vm:entry-point')
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   LocalNotification.showNotification(message);
-//   print("Handling a background message: $message");
-// }
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  LocalNotification.showNotification(message);
+  print("Handling a background message: $message");
+}
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  //
-  // await Preferences.init();
-  //
-  // if (Platform.isAndroid) {
-  //   await Firebase.initializeApp();
-  // } else if (Platform.isIOS){
-  //   await Firebase.initializeApp(
-  //     /*options: FirebaseOptions(
-  //     apiKey: WSConstants.API_KEY,
-  //     appId: WSConstants.APP_ID,
-  //     messagingSenderId: WSConstants.MESSGING_SENDER_ID,
-  //     projectId: WSConstants.PROJECT_ID,
-  //   )*/);
-  // }
-  //
-  // LocalNotification.initialize();
-  //
-  // FirebaseMessaging messaging = FirebaseMessaging.instance;
-  // NotificationSettings settings = await messaging.requestPermission(
-  //   alert: true,
-  //   announcement: false,
-  //   badge: true,
-  //   carPlay: false,
-  //   criticalAlert: false,
-  //   provisional: false,
-  //   sound: true,
-  // );
-  //
-  // if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-  //   print('User granted permission');
-  // } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
-  //   print('User granted provisional permission');
-  // } else {
-  //   print('User declined or has not accepted permission');
-  // }
-  //
-  // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //   LocalNotification.showNotification(message);
-  //   print('Mensagem recebida: ${message.data}');
-  // });
-  //
-  // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-  //   print('Mensagem abertaaaaaaaaa: ${message.data}');
-  //
-  // });
-  //
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Preferences.init();
+
+  if (Platform.isAndroid) {
+    await Firebase.initializeApp();
+  } else if (Platform.isIOS){
+    await Firebase.initializeApp(
+      /*options: FirebaseOptions(
+      apiKey: WSConstants.API_KEY,
+      appId: WSConstants.APP_ID,
+      messagingSenderId: WSConstants.MESSGING_SENDER_ID,
+      projectId: WSConstants.PROJECT_ID,
+    )*/);
+  }
+
+  LocalNotification.initialize();
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    print('User granted permission');
+  } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+    print('User granted provisional permission');
+  } else {
+    print('User declined or has not accepted permission');
+  }
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    LocalNotification.showNotification(message);
+    print('Mensagem recebida: ${message.data}');
+  });
+
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    print('Mensagem abertaaaaaaaaa: ${message.data}');
+
+  });
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(MaterialApp(
     theme: ThemeData(

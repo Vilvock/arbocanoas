@@ -81,6 +81,11 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+  assets:
+    - images/main_icon_1.png
+    - images/main_icon_2.png
+    - images/map_image256.png
+    - images/qr_code.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
