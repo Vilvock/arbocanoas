@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:arbocanoas/global_ui/MapSample.dart';
 import 'package:arbocanoas/res/owner_colors.dart';
+import 'package:arbocanoas/ui/navigation/map/MapSample.dart';
+import 'package:arbocanoas/ui/navigation/intro/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/services.dart';
 import 'config/notification_helper.dart';
 import 'config/preferences.dart';
 import 'config/useful.dart';
-import 'global_ui/navigation/intro/splash.dart';
 
 // @pragma('vm:entry-point')
 // Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -70,12 +70,12 @@ void main() async {
 
   runApp(MaterialApp(
     theme: ThemeData(
-      scaffoldBackgroundColor: Colors.white, //fundo de todo app
+      scaffoldBackgroundColor: Colors.white,
       primarySwatch: Useful().getMaterialColor(OwnerColors.colorPrimary),
       colorScheme: ColorScheme.fromSwatch(primarySwatch: Useful().getMaterialColor(OwnerColors.colorPrimary)),
     ),
     debugShowCheckedModeBanner: false,
-    title: "Água da Serra",
+    title: "Arbo Canoas",
     initialRoute: '/ui/splash',
     color: OwnerColors.colorPrimary,
     routes: {
