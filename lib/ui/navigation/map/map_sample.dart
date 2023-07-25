@@ -13,6 +13,7 @@ import '../../../model/user.dart';
 import '../../../res/dimens.dart';
 import '../../../web_service/links.dart';
 import '../../../web_service/service_response.dart';
+import '../../components/custom_app_bar.dart';
 
 class MapSample extends StatefulWidget {
   const MapSample({super.key});
@@ -24,7 +25,7 @@ class MapSample extends StatefulWidget {
 class MapSampleState extends State<MapSample> {
 
   final postRequest = PostRequest();
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   Future<List<Map<String, dynamic>>> listAll() async {
     try {
@@ -47,52 +48,52 @@ class MapSampleState extends State<MapSample> {
       throw Exception('HTTP_ERROR: $e');
     }
   }
-
-  Future<void> saveFcm() async {
-    try {
-      await Preferences.init();
-      String? savedFcmToken = await Preferences.getInstanceTokenFcm();
-      String? currentFcmToken = await _firebaseMessaging.getToken();
-      if (savedFcmToken != null && savedFcmToken == currentFcmToken) {
-        print('FCM: não salvou');
-        return;
-      }
-
-      var _type = "";
-
-      if (Platform.isAndroid) {
-        _type = ApplicationConstant.FCM_TYPE_ANDROID;
-      } else if (Platform.isIOS) {
-        _type = ApplicationConstant.FCM_TYPE_IOS;
-      } else {
-        return;
-      }
-
-      final body = {
-        "type": _type,
-        "registration_id": currentFcmToken,
-        "token": ApplicationConstant.TOKEN,
-      };
-
-      print('HTTP_BODY: $body');
-
-      final json = await postRequest.sendPostRequest(Links.SAVE_FCM, body);
-
-      List<Map<String, dynamic>> _map = [];
-      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
-
-      print('HTTP_RESPONSE: $_map');
-
-      final response = User.fromJson(_map[0]);
-
-      if (response.status == "01") {
-        await Preferences.saveInstanceTokenFcm("token", currentFcmToken!);
-        setState(() {});
-      } else {}
-    } catch (e) {
-      throw Exception('HTTP_ERROR: $e');
-    }
-  }
+  //
+  // Future<void> saveFcm() async {
+  //   try {
+  //     await Preferences.init();
+  //     String? savedFcmToken = await Preferences.getInstanceTokenFcm();
+  //     String? currentFcmToken = await _firebaseMessaging.getToken();
+  //     if (savedFcmToken != null && savedFcmToken == currentFcmToken) {
+  //       print('FCM: não salvou');
+  //       return;
+  //     }
+  //
+  //     var _type = "";
+  //
+  //     if (Platform.isAndroid) {
+  //       _type = ApplicationConstant.FCM_TYPE_ANDROID;
+  //     } else if (Platform.isIOS) {
+  //       _type = ApplicationConstant.FCM_TYPE_IOS;
+  //     } else {
+  //       return;
+  //     }
+  //
+  //     final body = {
+  //       "type": _type,
+  //       "registration_id": currentFcmToken,
+  //       "token": ApplicationConstant.TOKEN,
+  //     };
+  //
+  //     print('HTTP_BODY: $body');
+  //
+  //     final json = await postRequest.sendPostRequest(Links.SAVE_FCM, body);
+  //
+  //     List<Map<String, dynamic>> _map = [];
+  //     _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+  //
+  //     print('HTTP_RESPONSE: $_map');
+  //
+  //     final response = User.fromJson(_map[0]);
+  //
+  //     if (response.status == "01") {
+  //       await Preferences.saveInstanceTokenFcm("token", currentFcmToken!);
+  //       setState(() {});
+  //     } else {}
+  //   } catch (e) {
+  //     throw Exception('HTTP_ERROR: $e');
+  //   }
+  // }
 
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
@@ -133,7 +134,10 @@ class MapSampleState extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: CustomAppBar(title: "", isVisibleNotificationsButton: true),
+        body: FutureBuilder(
         future: myMarkers(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           return Stack(children: [
@@ -179,7 +183,7 @@ class MapSampleState extends State<MapSample> {
               ),
             ),
           ]);
-        });
+        }));
   }
 /*
   Future<void> _goToTheLake() async {

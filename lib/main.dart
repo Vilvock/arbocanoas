@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:arbocanoas/res/owner_colors.dart';
-import 'package:arbocanoas/ui/navigation/map/MapSample.dart';
+import 'package:arbocanoas/ui/navigation/map/map_sample.dart';
 import 'package:arbocanoas/ui/navigation/intro/splash.dart';
+import 'package:arbocanoas/ui/navigation/notifications/notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +82,7 @@ void main() async {
     routes: {
       '/ui/splash': (context) => Splash(),
       '/ui/maps': (context) => MapSample(),
+      '/ui/notifications': (context) => Notifications(),
     },
   ));
 }
