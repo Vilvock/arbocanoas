@@ -36,7 +36,7 @@ class _SplashState extends State<Splash> {
         padding: EdgeInsets.all(Dimens.paddingApplication),
         child: Center(
           child: Image.asset(
-            'images/main_logo_1.png',
+            'images/main_icon_1.png',
           ),
         ),
           decoration: BoxDecoration(

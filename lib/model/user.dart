@@ -1,14 +1,18 @@
 import 'global_ws_model.dart';
 
 class User extends GlobalWSModel {
-  final String descricao;
-  final String data;
-  final String titulo;
+  final String? descricao;
+  final String? data;
+  final String? titulo;
+  final dynamic latitude;
+  final dynamic longitude;
 
   User({
     required this.descricao,
     required this.data,
     required this.titulo,
+    required this.latitude,
+    required this.longitude,
     required super.status,
     required super.msg,
     required super.id,
@@ -20,6 +24,8 @@ class User extends GlobalWSModel {
       descricao: json['descricao'],
       data: json['data'],
       titulo: json['titulo'],
+      latitude: json['latitude'],
+      longitude: json['longitude'],
       status: json['status'],
       msg: json['msg'],
       id: json['id'],
