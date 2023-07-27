@@ -40,12 +40,12 @@ class _SplashState extends State<Splash> {
             fit: BoxFit.fitHeight,
           )),
           Container(height: double.infinity,decoration: BoxDecoration(
-            color: Color(0xA36B9142),
+            color: Color(0x9084B054),
           )),
-          Container(margin: EdgeInsets.only(top: 20),child:
+          Container(margin: EdgeInsets.only(top: 28),child:
           Center(
             child: Image.asset(
-              height: MediaQuery.of(context).size.height / 3,
+              height: MediaQuery.of(context).size.height / 3.2,
               'images/main_icon_1.png',
             ),
           )),
