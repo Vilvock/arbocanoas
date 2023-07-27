@@ -17,6 +17,7 @@ import '../../../global/application_constant.dart';
 import '../../../model/tree.dart';
 import '../../../model/user.dart';
 import '../../../res/dimens.dart';
+import '../../../res/owner_colors.dart';
 import '../../../res/styles.dart';
 import '../../../web_service/links.dart';
 import '../../../web_service/service_response.dart';
@@ -34,13 +35,34 @@ class MapSampleState extends State<MapSample> {
 
   final postRequest = PostRequest();
 
+  final TextEditingController queryController = TextEditingController();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
   List<Marker> mMarkers = [];
 
   @override
   void initState() {
     saveFcm();
     super.initState();
+  }
+
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
+
+  //canoas
+  CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(-29.911244, -51.176982),
+    zoom: Dimens.zoomMap,
+  );
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
   Future<List<Map<String, dynamic>>> listAll(String? query) async {
@@ -66,15 +88,15 @@ class MapSampleState extends State<MapSample> {
           Marker(
             visible: true,
             icon: BitmapDescriptor.fromBytes(markerIcon),
-            infoWindow: InfoWindow(
-              title: response.nome! /* + "\nCódigo: " + response.codigo!*/,
-              onTap: () {
-                _actualItem = response;
-                setState(() {
-
-                });
-              },
-            ),
+            // infoWindow: InfoWindow(
+            //   title: response.nome! /* + "\nCódigo: " + response.codigo!*/,
+            //   onTap: () {
+            //     _actualItem = response;
+            //     setState(() {
+            //
+            //     });
+            //   },
+            // ),
             markerId: MarkerId(response.id.toString()),
             position: LatLng(
                 double.parse(response.latitude.toString().replaceAll(",", ".")),
@@ -82,13 +104,13 @@ class MapSampleState extends State<MapSample> {
                     response.longitude.toString().replaceAll(",", "."))),
           ),
         );
-
-        _kGooglePlex = CameraPosition(
-          target: LatLng(
-              double.parse(response.latitude.toString().replaceAll(",", ".")),
-              double.parse(response.longitude.toString().replaceAll(",", "."))),
-          zoom: Dimens.zoomMap,
-        );
+        //
+        // _kGooglePlex = CameraPosition(
+        //   target: LatLng(
+        //       double.parse(response.latitude.toString().replaceAll(",", ".")),
+        //       double.parse(response.longitude.toString().replaceAll(",", "."))),
+        //   zoom: Dimens.zoomMap,
+        // );
       }
 
       return _map;
@@ -143,35 +165,10 @@ class MapSampleState extends State<MapSample> {
     }
   }
 
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
-
-  CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.43296265331129, -122.08832357078792),
-    zoom: 14.4746,
-  );
-
-  Future<Uint8List> getBytesFromAsset(String path, int width) async {
-    ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetWidth: width);
-    ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
-        .buffer
-        .asUint8List();
-  }
-
-/*  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: CustomAppBar(title: "", isVisibleNotificationsButton: true),
         body: FutureBuilder<List<Map<String, dynamic>>>(
             future: listAll(null),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -190,119 +187,129 @@ class MapSampleState extends State<MapSample> {
                   markers: mMarkers.toSet(),
                   zoomControlsEnabled: false,
                 ),
-                Visibility(
-                  visible: _actualItem != null,
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.only(top: Dimens.marginApplication),
+                  padding: EdgeInsets.all(Dimens.paddingApplication),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                          width: double.infinity,
-                          child: Card(
-                              elevation: Dimens.elevationApplication,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    Dimens.minRadiusApplication),
-                              ),
-                              margin:
-                                  EdgeInsets.all(Dimens.minMarginApplication),
-                              child: Container(
-                                padding:
-                                    EdgeInsets.all(Dimens.paddingApplication),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            right: Dimens.minMarginApplication),
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                                Dimens.minRadiusApplication),
-                                            child: Image.network(
-                                              "",
-                                              height: 90,
-                                              width: 90,
-                                              errorBuilder: (context, exception,
-                                                  stackTrack) =>
-                                                  Image.asset(
-                                                    'images/main_logo_1.png',
-                                                    height: 90,
-                                                    width: 90,
-                                                  ),
-                                            ))),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            _actualItem!.nome!,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontFamily: 'Inter',
-                                              fontSize: Dimens.textSize5,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          // SizedBox(
-                                          //     height: Dimens.minMarginApplication),
-                                          // Text(
-                                          //   response.email +
-                                          //       "\n" +
-                                          //       response.celular,
-                                          //   maxLines: 2,
-                                          //   overflow: TextOverflow.ellipsis,
-                                          //   style: TextStyle(
-                                          //     fontFamily: 'Inter',
-                                          //     fontSize: Dimens.textSize4,
-                                          //     color: Colors.black,
-                                          //   ),
-                                          // ),
-                                          // SizedBox(
-                                          //     height: Dimens.minMarginApplication),
-                                          // Text(
-                                          //   response.status.toString() == "1"
-                                          //       ? "Status: Ativo"
-                                          //       : "Status: Inativo",
-                                          //   maxLines: 2,
-                                          //   overflow: TextOverflow.ellipsis,
-                                          //   style: TextStyle(
-                                          //     fontFamily: 'Inter',
-                                          //     fontSize: Dimens.textSize4,
-                                          //     color: Colors.black,
-                                          //   ),
-                                          // ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    Container(
-                                        margin: EdgeInsets.all(2),
-                                        child: InkWell(
-                                            onTap: () {
-
-                                            },
-                                            child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(
-                                                    Dimens.minRadiusApplication),
-                                              ),
-                                              color: Colors.red,
-                                              child: Padding(
-                                                padding: EdgeInsets.all(
-                                                    Dimens.minPaddingApplication),
-                                                child: Icon(Icons.remove,
-                                                    size: 20, color: Colors.white),
-                                              ),
-                                            ))),
-                                  ],
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        FloatingActionButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, "/ui/notifications");
+                            },
+                            child: Icon(
+                              Icons.notifications_rounded,
+                              color: OwnerColors.colorPrimaryDark,
+                              size: 24,
+                            ),
+                            backgroundColor: Colors.white,
+                            mini: true),
+                        SizedBox(
+                          height: Dimens.marginApplication,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child:               TextField(
+                                controller: queryController,
+                                decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: OwnerColors.colorPrimary,
+                                        width: 1.5),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.grey, width: 1.0),
+                                  ),
+                                  hintText: 'Pesquisar pelo nome ou código...',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Dimens.radiusApplication),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  contentPadding: EdgeInsets.all(
+                                      Dimens.textFieldPaddingApplication),
                                 ),
-                              )))
-                    ],
-                  ),
+                                keyboardType: TextInputType.text,
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: Dimens.textSize5,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: Dimens.marginApplication),
+                            Expanded(flex: 0,
+                              child: Container(
+                                  margin: EdgeInsets.all(2),
+                                  child: InkWell(
+                                      onTap: () {
+                                        // showModalBottomSheet<dynamic>(
+                                        //   isScrollControlled: true,
+                                        //   context: context,
+                                        //   shape:
+                                        //   Styles().styleShapeBottomSheet,
+                                        //   clipBehavior:
+                                        //   Clip.antiAliasWithSaveLayer,
+                                        //   builder: (BuildContext context) {
+                                        //     return GenericAlertDialog(
+                                        //         title: Strings.attention,
+                                        //         content:
+                                        //         "Tem certeza que deseja remover este funcionário?",
+                                        //         btnBack: TextButton(
+                                        //             child: Text(
+                                        //               Strings.no,
+                                        //               style: TextStyle(
+                                        //                 fontFamily: 'Inter',
+                                        //                 color: Colors.black54,
+                                        //               ),
+                                        //             ),
+                                        //             onPressed: () {
+                                        //               Navigator.of(context)
+                                        //                   .pop();
+                                        //             }),
+                                        //         btnConfirm: TextButton(
+                                        //             child: Text(Strings.yes),
+                                        //             onPressed: () {
+                                        //               deleteEmployee(
+                                        //                   Preferences
+                                        //                       .getUserData()!
+                                        //                       .id
+                                        //                       .toString(),
+                                        //                   response.id
+                                        //                       .toString());
+                                        //               Navigator.of(context)
+                                        //                   .pop();
+                                        //             }));
+                                        //   },
+                                        // );
+
+                                        listAll(queryController.text.toString());
+                                      },
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              Dimens.minRadiusApplication),
+                                        ),
+                                        color: Colors.white,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(
+                                              Dimens.minPaddingApplication),
+                                          child: Icon(Icons.search,
+                                              size: 30,
+                                              color:
+                                              OwnerColors.colorPrimaryDark),
+                                        ),
+                                      ))),
+                            ),
+                          ],
+                        ),
+
+                      ]),
                 ),
               ]);
               /*  } else {

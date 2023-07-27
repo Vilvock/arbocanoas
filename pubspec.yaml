@@ -87,6 +87,7 @@ flutter:
     - images/map_image256.png
     - images/qr_code.png
     - images/tree_icon.png
+    - images/background_splash.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
