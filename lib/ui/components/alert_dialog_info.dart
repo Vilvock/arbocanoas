@@ -1,3 +1,4 @@
+import 'package:arbocanoas/res/owner_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../res/dimens.dart';
@@ -25,7 +26,7 @@ class _InfoAlertDialogState extends State<InfoAlertDialog> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Padding(
+          Container(color: OwnerColors.colorPrimaryDark, child: Padding(
             padding: const EdgeInsets.all(Dimens.paddingApplication),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,19 +36,27 @@ class _InfoAlertDialogState extends State<InfoAlertDialog> {
                     child: IconButton(
                       icon: Icon(
                         Icons.close,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
                     )),
-                Text(
-                  widget.title!,
-                  style: TextStyle(
-                      fontSize: Dimens.textSize7,
-                      fontFamily: 'Inter',
-                      color: Colors.black),
-                ),
+                Row(children: [
+
+                  Image.asset('images/tree_icon.png', height: 48,),
+
+                  SizedBox(width: Dimens.marginApplication),
+                  Text(
+                    widget.title!,
+                    style: TextStyle(
+                        fontSize: Dimens.textSize7,
+                        fontFamily: 'Inter',
+                        color: Colors.white,
+                    fontWeight: FontWeight.w900),
+                  ),
+                ],),
+
                 SizedBox(height: Dimens.marginApplication),
                 Container(width: double.infinity, child:
                 Text(
@@ -56,13 +65,13 @@ class _InfoAlertDialogState extends State<InfoAlertDialog> {
                   style: TextStyle(
                       fontSize: Dimens.textSize5,
                       fontFamily: 'Inter',
-                      color: Colors.black),
+                      color: Colors.white),
                 )),
                 SizedBox(height: Dimens.marginApplication),
 
               ],
             ),
-          ),
+          )),
         ]);
   }
 }

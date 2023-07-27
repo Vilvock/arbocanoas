@@ -105,11 +105,36 @@ class MapSampleState extends State<MapSample> {
           buffer.write("\nConflito 1: " +
               response.conflito1.toString());
         }
+        if (response.conflito2 != "") {
+
+          buffer.write("\nConflito 2: " +
+              response.conflito2.toString());
+        }
+        if (response.conflito3 != "") {
+
+          buffer.write("\nConflito 3: " +
+              response.conflito3.toString());
+        }
+        if (response.conflito4 != "") {
+
+          buffer.write("\nConflito 4: " +
+              response.conflito4.toString());
+        }
+        if (response.conflito5 != "") {
+
+          buffer.write("\nConflito 5: " +
+              response.conflito5.toString());
+        }
 
         if (response.risco1 != "") {
 
           buffer.write("\nRisco 1: " +
               response.risco1.toString());
+        }
+        if (response.risco2 != "") {
+
+          buffer.write("\nRisco 2: " +
+              response.risco2.toString());
         }
 
         buffer.write("\nEsq: " +
@@ -152,33 +177,8 @@ class MapSampleState extends State<MapSample> {
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 builder: (BuildContext context) {
                   return InfoAlertDialog(
-                      // {
-                      //   "id": 31,
-                      //   "codigo": "1",
-                      //   "nome": "Jerivá",
-                      //   "especie": "Syagrus romanzoffiana",
-                      //   "dapt": 20,
-                      //   "h_m": 4,
-                      //   "dc_m": 2,
-                      //   "local": "Canteiro",
-                      //   "efs": "Bom",
-                      //   "conflito1": "Elétrica",
-                      //   "conflito2": "",
-                      //   "conflito3": "",
-                      //   "conflito4": "",
-                      //   "conflito5": "",
-                      //   "risco1": "",
-                      //   "risco2": "",
-                      //   "esq": 4,
-                      //   "pos": 0,
-                      //   "pass": 0,
-                      //   "manejo": "",
-                      //   "bairro": "Rondon",
-                      //   "latitude": "-29,920802",
-                      //   "longitude": "-51,166625"
-                      // },
 
-                      title: response.nome! + " - " + response.codigo!,
+                      title: "#" + response.codigo! + " | " + response.nome!,
                       content: buffer.toString());
                 },
               );
