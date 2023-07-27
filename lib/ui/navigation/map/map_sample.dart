@@ -44,6 +44,7 @@ class MapSampleState extends State<MapSample> {
   @override
   void initState() {
     saveFcm();
+    listAll("");
     super.initState();
   }
 
@@ -67,8 +68,20 @@ class MapSampleState extends State<MapSample> {
   }
 
   Future<List<Map<String, dynamic>>> listAll(String? query) async {
+
+    mMarkers.clear();
+
     try {
-      final body = {"busca": query, "token": ApplicationConstant.TOKEN};
+
+      var body = {};
+
+      if (query != "") {
+
+        body = {"busca": query, "token": ApplicationConstant.TOKEN};
+      } else {
+
+        body = {"token": ApplicationConstant.TOKEN};
+      }
 
       print('HTTP_BODY: $body');
 
@@ -199,6 +212,9 @@ class MapSampleState extends State<MapSample> {
         // );
       }
 
+      setState(() {
+
+      });
       return _map;
     } catch (e) {
       throw Exception('HTTP_ERROR: $e');
@@ -255,11 +271,7 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: FutureBuilder<List<Map<String, dynamic>>>(
-            future: listAll(null),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              // if (snapshot.hasData) {
-              return Stack(children: [
+        body: Stack(children: [
                 GoogleMap(
                   mapType: MapType.normal,
                   initialCameraPosition: _kGooglePlex,
@@ -358,11 +370,9 @@ class MapSampleState extends State<MapSample> {
                         ),
                       ]),
                 ),
-              ]);
-              /*  } else {
-                return Container();
-              }*/
-            }));
+              ])
+
+    );
   }
 /*
   Future<void> _goToTheLake() async {
