@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:arbocanoas/config/application_messages.dart';
+import 'package:arbocanoas/ui/components/alert_dialog_info.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -86,6 +87,7 @@ class MapSampleState extends State<MapSample> {
 
         mMarkers.add(
           Marker(
+
             visible: true,
             icon: BitmapDescriptor.fromBytes(markerIcon),
             // infoWindow: InfoWindow(
@@ -97,6 +99,23 @@ class MapSampleState extends State<MapSample> {
             //     });
             //   },
             // ),
+              onTap: () {
+                showModalBottomSheet<dynamic>(
+                  isScrollControlled: true,
+                  context: context,
+                  shape:
+                  Styles().styleShapeBottomSheet,
+                  clipBehavior:
+                  Clip.antiAliasWithSaveLayer,
+                  builder: (BuildContext context) {
+                    return InfoAlertDialog(
+                        title: "",
+                        content:
+                        "Tem certeza que deseja remover este funcionário?",
+                            );
+                  },
+                );
+              },
             markerId: MarkerId(response.id.toString()),
             position: LatLng(
                 double.parse(response.latitude.toString().replaceAll(",", ".")),
@@ -186,6 +205,7 @@ class MapSampleState extends State<MapSample> {
                   zoomGesturesEnabled: true,
                   markers: mMarkers.toSet(),
                   zoomControlsEnabled: false,
+
                 ),
                 Container(
                   width: double.infinity,
@@ -248,45 +268,6 @@ class MapSampleState extends State<MapSample> {
                                   margin: EdgeInsets.all(2),
                                   child: InkWell(
                                       onTap: () {
-                                        // showModalBottomSheet<dynamic>(
-                                        //   isScrollControlled: true,
-                                        //   context: context,
-                                        //   shape:
-                                        //   Styles().styleShapeBottomSheet,
-                                        //   clipBehavior:
-                                        //   Clip.antiAliasWithSaveLayer,
-                                        //   builder: (BuildContext context) {
-                                        //     return GenericAlertDialog(
-                                        //         title: Strings.attention,
-                                        //         content:
-                                        //         "Tem certeza que deseja remover este funcionário?",
-                                        //         btnBack: TextButton(
-                                        //             child: Text(
-                                        //               Strings.no,
-                                        //               style: TextStyle(
-                                        //                 fontFamily: 'Inter',
-                                        //                 color: Colors.black54,
-                                        //               ),
-                                        //             ),
-                                        //             onPressed: () {
-                                        //               Navigator.of(context)
-                                        //                   .pop();
-                                        //             }),
-                                        //         btnConfirm: TextButton(
-                                        //             child: Text(Strings.yes),
-                                        //             onPressed: () {
-                                        //               deleteEmployee(
-                                        //                   Preferences
-                                        //                       .getUserData()!
-                                        //                       .id
-                                        //                       .toString(),
-                                        //                   response.id
-                                        //                       .toString());
-                                        //               Navigator.of(context)
-                                        //                   .pop();
-                                        //             }));
-                                        //   },
-                                        // );
 
                                         listAll(queryController.text.toString());
                                       },
