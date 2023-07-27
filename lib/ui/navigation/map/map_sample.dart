@@ -85,9 +85,54 @@ class MapSampleState extends State<MapSample> {
       for (var i = 0; i < _map.length; i++) {
         final response = Tree.fromJson(_map[i]);
 
+        var buffer = StringBuffer();
+
+        buffer.write("Espécie: " +
+            response.especie!);
+        buffer.write("\nDapt: " +
+            response.dapt.toString());
+        buffer.write("\nHM: " +
+            response.h_m.toString());
+        buffer.write("\nDcM: " +
+            response.dc_m.toString());
+        buffer.write("\nLocal: " +
+            response.local!);
+        buffer.write("\nEfs: " +
+            response.efs.toString());
+
+        if (response.conflito1 != "") {
+
+          buffer.write("\nConflito 1: " +
+              response.conflito1.toString());
+        }
+
+        if (response.risco1 != "") {
+
+          buffer.write("\nRisco 1: " +
+              response.risco1.toString());
+        }
+
+        buffer.write("\nEsq: " +
+            response.esq.toString());
+        buffer.write("\nPos: " +
+            response.pos.toString());
+        buffer.write("\nPass: " +
+            response.pass.toString());
+
+        if (response.manejo != "") {
+
+          buffer.write("\nManejo: " +
+              response.manejo!);
+        }
+
+        if (response.bairro != "") {
+
+          buffer.write("\nBairro: " +
+              response.bairro!);
+        }
+
         mMarkers.add(
           Marker(
-
             visible: true,
             icon: BitmapDescriptor.fromBytes(markerIcon),
             // infoWindow: InfoWindow(
@@ -99,23 +144,45 @@ class MapSampleState extends State<MapSample> {
             //     });
             //   },
             // ),
-              onTap: () {
-                showModalBottomSheet<dynamic>(
-                  isScrollControlled: true,
-                  context: context,
-                  shape:
-                  Styles().styleShapeBottomSheet,
-                  clipBehavior:
-                  Clip.antiAliasWithSaveLayer,
-                  builder: (BuildContext context) {
-                    return InfoAlertDialog(
-                        title: "",
-                        content:
-                        "Tem certeza que deseja remover este funcionário?",
-                            );
-                  },
-                );
-              },
+            onTap: () {
+              showModalBottomSheet<dynamic>(
+                isScrollControlled: true,
+                context: context,
+                shape: Styles().styleShapeBottomSheet,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                builder: (BuildContext context) {
+                  return InfoAlertDialog(
+                      // {
+                      //   "id": 31,
+                      //   "codigo": "1",
+                      //   "nome": "Jerivá",
+                      //   "especie": "Syagrus romanzoffiana",
+                      //   "dapt": 20,
+                      //   "h_m": 4,
+                      //   "dc_m": 2,
+                      //   "local": "Canteiro",
+                      //   "efs": "Bom",
+                      //   "conflito1": "Elétrica",
+                      //   "conflito2": "",
+                      //   "conflito3": "",
+                      //   "conflito4": "",
+                      //   "conflito5": "",
+                      //   "risco1": "",
+                      //   "risco2": "",
+                      //   "esq": 4,
+                      //   "pos": 0,
+                      //   "pass": 0,
+                      //   "manejo": "",
+                      //   "bairro": "Rondon",
+                      //   "latitude": "-29,920802",
+                      //   "longitude": "-51,166625"
+                      // },
+
+                      title: response.nome! + " - " + response.codigo!,
+                      content: buffer.toString());
+                },
+              );
+            },
             markerId: MarkerId(response.id.toString()),
             position: LatLng(
                 double.parse(response.latitude.toString().replaceAll(",", ".")),
@@ -205,7 +272,6 @@ class MapSampleState extends State<MapSample> {
                   zoomGesturesEnabled: true,
                   markers: mMarkers.toSet(),
                   zoomControlsEnabled: false,
-
                 ),
                 Container(
                   width: double.infinity,
@@ -231,7 +297,7 @@ class MapSampleState extends State<MapSample> {
                         Row(
                           children: [
                             Expanded(
-                              child:               TextField(
+                              child: TextField(
                                 controller: queryController,
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
@@ -263,13 +329,14 @@ class MapSampleState extends State<MapSample> {
                               ),
                             ),
                             SizedBox(width: Dimens.marginApplication),
-                            Expanded(flex: 0,
+                            Expanded(
+                              flex: 0,
                               child: Container(
                                   margin: EdgeInsets.all(2),
                                   child: InkWell(
                                       onTap: () {
-
-                                        listAll(queryController.text.toString());
+                                        listAll(
+                                            queryController.text.toString());
                                       },
                                       child: Card(
                                         shape: RoundedRectangleBorder(
@@ -283,13 +350,12 @@ class MapSampleState extends State<MapSample> {
                                           child: Icon(Icons.search,
                                               size: 30,
                                               color:
-                                              OwnerColors.colorPrimaryDark),
+                                                  OwnerColors.colorPrimaryDark),
                                         ),
                                       ))),
                             ),
                           ],
                         ),
-
                       ]),
                 ),
               ]);

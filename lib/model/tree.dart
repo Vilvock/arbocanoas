@@ -10,6 +10,7 @@ class Tree extends GlobalWSModel {
   final String? local;
   final String? efs;
   final String? conflito1;
+  final String? risco1;
   final int? esq;
   final int? pos;
   final int? pass;
@@ -28,6 +29,7 @@ class Tree extends GlobalWSModel {
     required this.local,
     required this.efs,
     required this.conflito1,
+    required this.risco1,
     required this.esq,
     required this.pos,
     required this.pass,
@@ -58,6 +60,7 @@ class Tree extends GlobalWSModel {
       local: json['local'] ?? "",
       efs: json['efs'] ?? "",
       conflito1: json['conflito1'] ?? "",
+      risco1: json['risco1'] ?? "",
       esq: json['esq'] ?? 0,
       pos: json['pos'] ?? 0,
       pass: json['pass'] ?? 0,

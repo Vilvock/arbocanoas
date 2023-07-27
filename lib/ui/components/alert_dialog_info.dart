@@ -49,14 +49,15 @@ class _InfoAlertDialogState extends State<InfoAlertDialog> {
                       color: Colors.black),
                 ),
                 SizedBox(height: Dimens.marginApplication),
+                Container(width: double.infinity, child:
                 Text(
                   widget.content!,
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.start,
                   style: TextStyle(
                       fontSize: Dimens.textSize5,
                       fontFamily: 'Inter',
                       color: Colors.black),
-                ),
+                )),
                 SizedBox(height: Dimens.marginApplication),
 
               ],
