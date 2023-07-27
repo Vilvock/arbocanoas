@@ -33,18 +33,25 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        padding: EdgeInsets.all(Dimens.paddingApplication),
-        child: Center(
-          child: Image.asset(
-            'images/main_icon_1.png',
-          ),
-        ),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [OwnerColors.gradientFirstColor, OwnerColors.gradientSecondaryColor, OwnerColors.gradientThirdColor],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter)
+        child: Stack( children: [
+        Container(height: double.infinity, child:
+          Image.asset(
+            'images/background_splash.png',
+            fit: BoxFit.fitHeight,
+          )),
+          Container(height: double.infinity,decoration: BoxDecoration(
+            color: Color(0xA36B9142),
+          )),
+          Container(margin: EdgeInsets.only(top: 20),child:
+          Center(
+            child: Image.asset(
+              height: MediaQuery.of(context).size.height / 3,
+              'images/main_icon_1.png',
             ),
+          )),
+        ],
+        ),
+
           ),
       );
   }
