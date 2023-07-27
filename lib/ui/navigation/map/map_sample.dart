@@ -14,8 +14,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../config/preferences.dart';
 import '../../../global/application_constant.dart';
+import '../../../model/tree.dart';
 import '../../../model/user.dart';
 import '../../../res/dimens.dart';
+import '../../../res/styles.dart';
 import '../../../web_service/links.dart';
 import '../../../web_service/service_response.dart';
 import '../../components/custom_app_bar.dart';
@@ -28,6 +30,7 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
+  Tree? _actualItem = null;
 
   final postRequest = PostRequest();
 
@@ -40,9 +43,9 @@ class MapSampleState extends State<MapSample> {
     super.initState();
   }
 
-  Future<List<Map<String, dynamic>>> listAll() async {
+  Future<List<Map<String, dynamic>>> listAll(String? query) async {
     try {
-      final body = {"token": ApplicationConstant.TOKEN};
+      final body = {"busca": query, "token": ApplicationConstant.TOKEN};
 
       print('HTTP_BODY: $body');
 
@@ -54,26 +57,38 @@ class MapSampleState extends State<MapSample> {
       print('HTTP_RESPONSE: $_map');
 
       final Uint8List markerIcon =
-      await getBytesFromAsset('images/tree_icon.png', 100);
+          await getBytesFromAsset('images/tree_icon.png', 100);
 
       for (var i = 0; i < _map.length; i++) {
-
-        final response = User.fromJson(_map[i]);
+        final response = Tree.fromJson(_map[i]);
 
         mMarkers.add(
           Marker(
             visible: true,
             icon: BitmapDescriptor.fromBytes(markerIcon),
+            infoWindow: InfoWindow(
+              title: response.nome! /* + "\nCódigo: " + response.codigo!*/,
+              onTap: () {
+                _actualItem = response;
+                setState(() {
+
+                });
+              },
+            ),
             markerId: MarkerId(response.id.toString()),
-            position: LatLng(double.parse(response.latitude.toString().replaceAll(",", ".")), double.parse(response.longitude.toString().replaceAll(",", "."))),
+            position: LatLng(
+                double.parse(response.latitude.toString().replaceAll(",", ".")),
+                double.parse(
+                    response.longitude.toString().replaceAll(",", "."))),
           ),
         );
 
         _kGooglePlex = CameraPosition(
-          target: LatLng(double.parse(response.latitude.toString().replaceAll(",", ".")), double.parse(response.longitude.toString().replaceAll(",", "."))),
+          target: LatLng(
+              double.parse(response.latitude.toString().replaceAll(",", ".")),
+              double.parse(response.longitude.toString().replaceAll(",", "."))),
           zoom: Dimens.zoomMap,
         );
-
       }
 
       return _map;
@@ -81,7 +96,6 @@ class MapSampleState extends State<MapSample> {
       throw Exception('HTTP_ERROR: $e');
     }
   }
-
 
   Future<void> saveFcm() async {
     try {
@@ -159,54 +173,139 @@ class MapSampleState extends State<MapSample> {
         resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(title: "", isVisibleNotificationsButton: true),
         body: FutureBuilder<List<Map<String, dynamic>>>(
-            future: listAll(),
+            future: listAll(null),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               // if (snapshot.hasData) {
-                  return Stack(children: [
-                    GoogleMap(
-                      mapType: MapType.normal,
-                      initialCameraPosition: _kGooglePlex,
-                      onMapCreated: (GoogleMapController controller) {
-                        _controller.complete(controller);
-                      },
-                      scrollGesturesEnabled: true,
-                      compassEnabled: true,
-                      myLocationEnabled: true,
-                      zoomGesturesEnabled: true,
-                      markers: mMarkers.toSet(),
-                      zoomControlsEnabled: false,
-                    ),
-                    Visibility(
-                      visible: true,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                              width: double.infinity,
-                              child: Card(
-                                  elevation: Dimens.elevationApplication,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        Dimens.minRadiusApplication),
-                                  ),
-                                  margin: EdgeInsets.all(
-                                      Dimens.minMarginApplication),
-                                  child: Container(
-                                    padding: EdgeInsets.all(
-                                        Dimens.paddingApplication),
-                                    child: Column(children: [
-                                      SizedBox(
-                                        height: 20,
-                                      )
-                                    ]),
-                                  )))
-                        ],
-                      ),
-                    ),
-                  ]);
-            /*  } else {
+              return Stack(children: [
+                GoogleMap(
+                  mapType: MapType.normal,
+                  initialCameraPosition: _kGooglePlex,
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                  },
+                  scrollGesturesEnabled: true,
+                  compassEnabled: true,
+                  myLocationEnabled: true,
+                  zoomGesturesEnabled: true,
+                  markers: mMarkers.toSet(),
+                  zoomControlsEnabled: false,
+                ),
+                Visibility(
+                  visible: _actualItem != null,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                          width: double.infinity,
+                          child: Card(
+                              elevation: Dimens.elevationApplication,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    Dimens.minRadiusApplication),
+                              ),
+                              margin:
+                                  EdgeInsets.all(Dimens.minMarginApplication),
+                              child: Container(
+                                padding:
+                                    EdgeInsets.all(Dimens.paddingApplication),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                        margin: EdgeInsets.only(
+                                            right: Dimens.minMarginApplication),
+                                        child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                Dimens.minRadiusApplication),
+                                            child: Image.network(
+                                              "",
+                                              height: 90,
+                                              width: 90,
+                                              errorBuilder: (context, exception,
+                                                  stackTrack) =>
+                                                  Image.asset(
+                                                    'images/main_logo_1.png',
+                                                    height: 90,
+                                                    width: 90,
+                                                  ),
+                                            ))),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            _actualItem!.nome!,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontFamily: 'Inter',
+                                              fontSize: Dimens.textSize5,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          // SizedBox(
+                                          //     height: Dimens.minMarginApplication),
+                                          // Text(
+                                          //   response.email +
+                                          //       "\n" +
+                                          //       response.celular,
+                                          //   maxLines: 2,
+                                          //   overflow: TextOverflow.ellipsis,
+                                          //   style: TextStyle(
+                                          //     fontFamily: 'Inter',
+                                          //     fontSize: Dimens.textSize4,
+                                          //     color: Colors.black,
+                                          //   ),
+                                          // ),
+                                          // SizedBox(
+                                          //     height: Dimens.minMarginApplication),
+                                          // Text(
+                                          //   response.status.toString() == "1"
+                                          //       ? "Status: Ativo"
+                                          //       : "Status: Inativo",
+                                          //   maxLines: 2,
+                                          //   overflow: TextOverflow.ellipsis,
+                                          //   style: TextStyle(
+                                          //     fontFamily: 'Inter',
+                                          //     fontSize: Dimens.textSize4,
+                                          //     color: Colors.black,
+                                          //   ),
+                                          // ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    Container(
+                                        margin: EdgeInsets.all(2),
+                                        child: InkWell(
+                                            onTap: () {
+
+                                            },
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(
+                                                    Dimens.minRadiusApplication),
+                                              ),
+                                              color: Colors.red,
+                                              child: Padding(
+                                                padding: EdgeInsets.all(
+                                                    Dimens.minPaddingApplication),
+                                                child: Icon(Icons.remove,
+                                                    size: 20, color: Colors.white),
+                                              ),
+                                            ))),
+                                  ],
+                                ),
+                              )))
+                    ],
+                  ),
+                ),
+              ]);
+              /*  } else {
                 return Container();
               }*/
             }));
