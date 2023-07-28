@@ -104,9 +104,9 @@ class MapSampleState extends State<MapSample> {
             response.especie!);
         buffer.write("\nDapt: " +
             response.dapt.toString());
-        buffer.write("\nHM: " +
+        buffer.write("\nH(m): " +
             response.h_m.toString());
-        buffer.write("\nDcM: " +
+        buffer.write("\nDC(m): " +
             response.dc_m.toString());
         buffer.write("\nLocal: " +
             response.local!);
@@ -169,6 +169,11 @@ class MapSampleState extends State<MapSample> {
               response.bairro!);
         }
 
+        buffer.write("\nLatitude: " +
+            response.latitude.toString());
+        buffer.write("\nLongitude: " +
+            response.longitude.toString());
+
         mMarkers.add(
           Marker(
             visible: true,
@@ -192,7 +197,7 @@ class MapSampleState extends State<MapSample> {
                   return InfoAlertDialog(
 
                       title: "#" + response.codigo! + " | " + response.nome!,
-                      content: buffer.toString());
+                      tree: response);
                 },
               );
             },
