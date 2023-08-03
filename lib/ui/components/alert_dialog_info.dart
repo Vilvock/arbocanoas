@@ -81,6 +81,7 @@ class _InfoAlertDialogState extends State<InfoAlertDialog> {
                               color: Colors.white,
                               fontSize: Dimens.textSize5,
                               fontFamily: 'Inter',
+                              fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.w800)),
                     ],
                   ),
@@ -96,7 +97,7 @@ class _InfoAlertDialogState extends State<InfoAlertDialog> {
                     children: <TextSpan>[
                       TextSpan(
                           text:
-                          "Dapt: "),
+                          "Diâmetro à Altura do Peito (cm): "),
                       TextSpan(
                           text:
                           widget.tree!.dapt.toString(),
@@ -119,7 +120,7 @@ class _InfoAlertDialogState extends State<InfoAlertDialog> {
                     children: <TextSpan>[
                       TextSpan(
                           text:
-                          "H(m): "),
+                          "Altura (m): "),
                       TextSpan(
                           text:
                           widget.tree!.h_m.toString(),
@@ -142,7 +143,7 @@ class _InfoAlertDialogState extends State<InfoAlertDialog> {
                     children: <TextSpan>[
                       TextSpan(
                           text:
-                          "DC(m): "),
+                          "Diâmetro da Copa (m): "),
                       TextSpan(
                           text:
                           widget.tree!.dc_m.toString(),
@@ -188,7 +189,7 @@ class _InfoAlertDialogState extends State<InfoAlertDialog> {
                     children: <TextSpan>[
                       TextSpan(
                           text:
-                          "Efs: "),
+                          "Estado Fitossanitário: "),
                       TextSpan(
                           text:
                           widget.tree!.efs.toString(),
@@ -379,7 +380,7 @@ class _InfoAlertDialogState extends State<InfoAlertDialog> {
                     children: <TextSpan>[
                       TextSpan(
                           text:
-                          "Esq: "),
+                          "Distância Esquina (m): "),
                       TextSpan(
                           text:
                           widget.tree!.esq.toString(),
@@ -402,7 +403,7 @@ class _InfoAlertDialogState extends State<InfoAlertDialog> {
                     children: <TextSpan>[
                       TextSpan(
                           text:
-                          "Pos: "),
+                          "Distância Poste (m): "),
                       TextSpan(
                           text:
                           widget.tree!.pos.toString(),
@@ -425,7 +426,7 @@ class _InfoAlertDialogState extends State<InfoAlertDialog> {
                     children: <TextSpan>[
                       TextSpan(
                           text:
-                          "Pass: "),
+                          "Largura Passeio (m): "),
                       TextSpan(
                           text:
                           widget.tree!.pass.toString(),
