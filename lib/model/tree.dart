@@ -16,9 +16,9 @@ class Tree extends GlobalWSModel {
   final String? conflito5;
   final String? risco1;
   final String? risco2;
-  final int? esq;
-  final int? pos;
-  final int? pass;
+  final String? esq;
+  final String? pos;
+  final String? pass;
   final String? manejo;
   final String? bairro;
   final dynamic latitude;
@@ -76,9 +76,9 @@ class Tree extends GlobalWSModel {
       conflito5: json['conflito5'] ?? "",
       risco1: json['risco1'] ?? "",
       risco2: json['risco2'] ?? "",
-      esq: json['esq'] ?? 0,
-      pos: json['pos'] ?? 0,
-      pass: json['pass'] ?? 0,
+      esq: json['esq'] ?? "",
+      pos: json['pos'] ?? "",
+      pass: json['pass'] ?? "",
       manejo: json['manejo'] ?? "",
       bairro: json['bairro'] ?? "",
     );
