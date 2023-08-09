@@ -80,6 +80,7 @@ class _FilterAlertDialogState extends State<FilterAlertDialog> {
                                 widget.managementController.text = "";
                                 widget.nbhController.text = "";
 
+                                isShowingFilter = false;
                               });
                             },
                             child:/* Card(
