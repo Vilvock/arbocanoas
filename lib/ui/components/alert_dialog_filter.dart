@@ -25,8 +25,18 @@ class FilterAlertDialog extends StatefulWidget {
 }
 
 class _FilterAlertDialogState extends State<FilterAlertDialog> {
+
+  var isShowingFilter = false;
+
   @override
   Widget build(BuildContext context) {
+
+    if (widget.speciesController.text != "" || widget.localController.text != "" || widget.managementController.text != "" || widget.nbhController.text != "") {
+
+      isShowingFilter = true;
+
+    }
+
     return SingleChildScrollView(
       child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -57,9 +67,11 @@ class _FilterAlertDialogState extends State<FilterAlertDialog> {
                             },
                           )),
 
+                      Visibility(visible: isShowingFilter, child:
                       Align(
                         alignment: Alignment.topRight,
                         child: Container(
+                          margin: EdgeInsets.only(right: Dimens.minMarginApplication),
                           child: InkWell(
                             onTap: () {
                               setState(() {
@@ -70,7 +82,7 @@ class _FilterAlertDialogState extends State<FilterAlertDialog> {
 
                               });
                             },
-                            child: Card(
+                            child:/* Card(
                                 color: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
@@ -80,18 +92,18 @@ class _FilterAlertDialogState extends State<FilterAlertDialog> {
                                 child: Container(
                                     padding: EdgeInsets.all(Dimens
                                         .minPaddingApplication),
-                                    child: Text(
+                                    child:*/ Text(
                                       "Limpar filtros",
                                       style: TextStyle(
                                         fontFamily: 'Inter',
                                         fontSize:
                                         Dimens.textSize5,
-                                        color: OwnerColors.colorPrimaryDark,
+                                        color: Colors.white,
                                       ),
                                     ))),
-                          ),
-                        ),
-                      ),
+
+
+                      )),
                       Text(
                         "Filtro avançado",
                         style: TextStyle(
