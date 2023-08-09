@@ -6,13 +6,17 @@ import '../../res/dimens.dart';
 import '../../res/styles.dart';
 
 class FilterAlertDialog extends StatefulWidget {
-
   TextEditingController speciesController;
   TextEditingController localController;
   TextEditingController managementController;
   TextEditingController nbhController;
 
-  FilterAlertDialog({Key? key, required this.speciesController, required this.localController, required this.managementController, required this.nbhController});
+  FilterAlertDialog(
+      {Key? key,
+      required this.speciesController,
+      required this.localController,
+      required this.managementController,
+      required this.nbhController});
 
   // DialogGeneric({Key? key}) : super(key: key);
 
@@ -23,174 +27,180 @@ class FilterAlertDialog extends StatefulWidget {
 class _FilterAlertDialogState extends State<FilterAlertDialog> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-              color: OwnerColors.colorPrimaryDark,
-              child: Padding(
-                padding: const EdgeInsets.all(Dimens.paddingApplication),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Align(
-                        alignment: AlignmentDirectional.topEnd,
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.close,
+    return SingleChildScrollView(
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+                color: OwnerColors.colorPrimaryDark,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      Dimens.paddingApplication,
+                      Dimens.paddingApplication,
+                      Dimens.paddingApplication,
+                      MediaQuery.of(context).viewInsets.bottom +
+                          Dimens.paddingApplication),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Align(
+                          alignment: AlignmentDirectional.topEnd,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.close,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          )),
+                      Text(
+                        "Filtro avançado",
+                        style: TextStyle(
+                            fontSize: Dimens.textSize7,
+                            fontFamily: 'Inter',
                             color: Colors.white,
+                            fontWeight: FontWeight.w900),
+                      ),
+                      SizedBox(height: Dimens.marginApplication),
+                      TextField(
+                        controller: widget.speciesController,
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: OwnerColors.colorPrimary, width: 1.5),
                           ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1.0),
+                          ),
+                          hintText: 'Espécie',
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(Dimens.radiusApplication),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: EdgeInsets.all(
+                              Dimens.textFieldPaddingApplication),
+                        ),
+                        keyboardType: TextInputType.text,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: Dimens.textSize5,
+                        ),
+                      ),
+                      SizedBox(height: Dimens.marginApplication),
+                      TextField(
+                        controller: widget.localController,
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: OwnerColors.colorPrimary, width: 1.5),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1.0),
+                          ),
+                          hintText: 'Local',
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(Dimens.radiusApplication),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: EdgeInsets.all(
+                              Dimens.textFieldPaddingApplication),
+                        ),
+                        keyboardType: TextInputType.text,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: Dimens.textSize5,
+                        ),
+                      ),
+                      SizedBox(height: Dimens.marginApplication),
+                      TextField(
+                        controller: widget.managementController,
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: OwnerColors.colorPrimary, width: 1.5),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1.0),
+                          ),
+                          hintText: 'Manejo',
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(Dimens.radiusApplication),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: EdgeInsets.all(
+                              Dimens.textFieldPaddingApplication),
+                        ),
+                        keyboardType: TextInputType.text,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: Dimens.textSize5,
+                        ),
+                      ),
+                      SizedBox(height: Dimens.marginApplication),
+                      TextField(
+                        controller: widget.nbhController,
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: OwnerColors.colorPrimary, width: 1.5),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1.0),
+                          ),
+                          hintText: 'Bairro',
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(Dimens.radiusApplication),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: EdgeInsets.all(
+                              Dimens.textFieldPaddingApplication),
+                        ),
+                        keyboardType: TextInputType.text,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: Dimens.textSize5,
+                        ),
+                      ),
+                      SizedBox(height: Dimens.marginApplication),
+                      Container(
+                        margin: EdgeInsets.only(top: Dimens.marginApplication),
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: Styles().styleDefaultButton,
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            Navigator.of(context).pop(true);
                           },
-                        )),
-                    Text(
-                      "Filtro avançado",
-                      style: TextStyle(
-                          fontSize: Dimens.textSize7,
-                          fontFamily: 'Inter',
-                          color: Colors.white,
-                          fontWeight: FontWeight.w900),
-                    ),
-                    SizedBox(height: Dimens.marginApplication),
-                    TextField(
-                      controller: widget.speciesController,
-                      decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: OwnerColors.colorPrimary, width: 1.5),
+                          child: Text("Filtrar",
+                              style: Styles().styleDefaultTextButton),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 1.0),
-                        ),
-                        hintText: 'Espécie',
-                        hintStyle: TextStyle(color: Colors.grey),
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(Dimens.radiusApplication),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding:
-                            EdgeInsets.all(Dimens.textFieldPaddingApplication),
                       ),
-                      keyboardType: TextInputType.text,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: Dimens.textSize5,
-                      ),
-                    ),
-                    SizedBox(height: Dimens.marginApplication),
-                    TextField(
-                      controller: widget.localController,
-                      decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: OwnerColors.colorPrimary, width: 1.5),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 1.0),
-                        ),
-                        hintText: 'Local',
-                        hintStyle: TextStyle(color: Colors.grey),
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(Dimens.radiusApplication),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding:
-                            EdgeInsets.all(Dimens.textFieldPaddingApplication),
-                      ),
-                      keyboardType: TextInputType.text,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: Dimens.textSize5,
-                      ),
-                    ),
-                    SizedBox(height: Dimens.marginApplication),
-                    TextField(
-                      controller: widget.managementController,
-                      decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: OwnerColors.colorPrimary, width: 1.5),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 1.0),
-                        ),
-                        hintText: 'Manejo',
-                        hintStyle: TextStyle(color: Colors.grey),
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(Dimens.radiusApplication),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding:
-                            EdgeInsets.all(Dimens.textFieldPaddingApplication),
-                      ),
-                      keyboardType: TextInputType.text,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: Dimens.textSize5,
-                      ),
-                    ),
-                    SizedBox(height: Dimens.marginApplication),
-                    TextField(
-                      controller: widget.nbhController,
-                      decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: OwnerColors.colorPrimary, width: 1.5),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 1.0),
-                        ),
-                        hintText: 'Bairro',
-                        hintStyle: TextStyle(color: Colors.grey),
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(Dimens.radiusApplication),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding:
-                            EdgeInsets.all(Dimens.textFieldPaddingApplication),
-                      ),
-                      keyboardType: TextInputType.text,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: Dimens.textSize5,
-                      ),
-                    ),
-                    SizedBox(height: Dimens.marginApplication),
-                    Container(
-                      margin: EdgeInsets.only(top: Dimens.marginApplication),
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: Styles().styleDefaultButton,
-                        onPressed: () {
-
-                          Navigator.of(context).pop(true);
-                        },
-                        child: Text("Filtrar",
-                            style: Styles().styleDefaultTextButton),
-                      ),
-                    ),
-                  ],
-                ),
-              )),
-        ]);
+                    ],
+                  ),
+                ))
+          ]),
+    );
   }
 }
