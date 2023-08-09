@@ -68,7 +68,7 @@ class MapSampleState extends State<MapSample> {
   }
 
   final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  Completer<GoogleMapController>();
 
   //canoas
   CameraPosition _kGooglePlex = CameraPosition(
@@ -108,7 +108,7 @@ class MapSampleState extends State<MapSample> {
       print('HTTP_RESPONSE: $_map');
 
       final Uint8List markerIcon =
-          await getBytesFromAsset('images/tree_icon.png', 100);
+      await getBytesFromAsset('images/tree_icon.png', 100);
 
       for (var i = 0; i < _map.length; i++) {
         final response = Tree.fromJson(_map[i]);
@@ -154,12 +154,12 @@ class MapSampleState extends State<MapSample> {
 
       // if (query != "") {
 
-        body = {
-          "especie": speciesController.text,
-          "local": localController.text,
-          "manejo": managementController.text,
-          "bairro": nbhController.text,
-          "token": ApplicationConstant.TOKEN};
+      body = {
+        "especie": speciesController.text,
+        "local": localController.text,
+        "manejo": managementController.text,
+        "bairro": nbhController.text,
+        "token": ApplicationConstant.TOKEN};
       // } else {
       //   body = {"token": ApplicationConstant.TOKEN};
       // }
@@ -281,143 +281,160 @@ class MapSampleState extends State<MapSample> {
             margin: EdgeInsets.only(top: Dimens.marginApplication),
             padding: EdgeInsets.all(Dimens.paddingApplication),
             child:
-                Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
 
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: Styles().styleDefaultButton,
-                        onPressed: () {
-                          setState(() {
-                            speciesController.text = "";
-                            localController.text = "";
-                            managementController.text = "";
-                            nbhController.text = "";
+              Expanded(
+              flex: 0,
+              child: Container(
+                  child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          speciesController.text = "";
+                          localController.text = "";
+                          managementController.text = "";
+                          nbhController.text = "";
 
-                            mMarkers.clear();
-                          });
-                        },
-                        child: Text("Limpar filtros",
-                            style: Styles().styleDefaultTextButton),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: Dimens.marginApplication,
-                  ),
-                  FloatingActionButton(
-                      onPressed: () async {
-                        final result = await showModalBottomSheet<dynamic>(
-                          isScrollControlled: true,
-                          context: context,
-                          shape: Styles().styleShapeBottomSheet,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          builder: (BuildContext context) {
-                            return FilterAlertDialog(
-                              speciesController: speciesController,
-                              localController: localController,
-                              managementController: managementController,
-                              nbhController: nbhController,
-                            );
-                          },
-                        );
-                        if (result == true) {
-                            listAllFilter();
-                        }
+                          mMarkers.clear();
+                        });
                       },
-                      child: Icon(
-                        Icons.filter_list,
-                        color: OwnerColors.colorPrimaryDark,
-                        size: 24,
-                      ),
-                      backgroundColor: Colors.white,
-                      mini: true),
-                  SizedBox(
-                    width: Dimens.minMarginApplication,
-                  ),
-                  FloatingActionButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/ui/notifications");
-                      },
-                      child: Icon(
-                        Icons.notifications_rounded,
-                        color: OwnerColors.colorPrimaryDark,
-                        size: 24,
-                      ),
-                      backgroundColor: Colors.white,
-                      mini: true),
-                ],
+                      child: Card(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.circular(Dimens
+                                .minRadiusApplication),
+                          ),
+                          child: Container(
+                              padding: EdgeInsets.all(Dimens
+                                  .minPaddingApplication),
+                              child: Text(
+                                "Limpar filtros",
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize:
+                                  Dimens.textSize5,
+                                  color: OwnerColors.colorPrimaryDark,
+                                ),
+                              ))),
               ),
-              SizedBox(
-                height: Dimens.marginApplication,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: queryController,
-                      decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: OwnerColors.colorPrimary, width: 1.5),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 1.0),
-                        ),
-                        hintText: 'Pesquisar pelo nome ou código...',
-                        hintStyle: TextStyle(color: Colors.grey),
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(Dimens.radiusApplication),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding:
-                            EdgeInsets.all(Dimens.textFieldPaddingApplication),
-                      ),
-                      keyboardType: TextInputType.text,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: Dimens.textSize5,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: Dimens.marginApplication),
-                  Expanded(
-                    flex: 0,
-                    child: Container(
-                        margin: EdgeInsets.all(2),
-                        child: InkWell(
-                            onTap: () {
-                              listAll(queryController.text.toString());
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    Dimens.minRadiusApplication),
-                              ),
-                              color: Colors.white,
-                              child: Padding(
-                                padding: EdgeInsets.all(
-                                    Dimens.minPaddingApplication),
-                                child: Icon(Icons.search,
-                                    size: 30,
-                                    color: OwnerColors.colorPrimaryDark),
-                              ),
-                            ))),
-                  ),
-                ],
-              ),
-            ]),
+            ),
           ),
-        ]));
+          SizedBox(
+            width: Dimens.marginApplication,
+          ),
+          FloatingActionButton(
+              onPressed: () async {
+                final result = await showModalBottomSheet<dynamic>(
+                  isScrollControlled: true,
+                  context: context,
+                  shape: Styles().styleShapeBottomSheet,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  builder: (BuildContext context) {
+                    return FilterAlertDialog(
+                      speciesController: speciesController,
+                      localController: localController,
+                      managementController: managementController,
+                      nbhController: nbhController,
+                    );
+                  },
+                );
+                if (result == true) {
+                  listAllFilter();
+                }
+              },
+              child: Icon(
+                Icons.filter_list,
+                color: OwnerColors.colorPrimaryDark,
+                size: 24,
+              ),
+              backgroundColor: Colors.white,
+              mini: true),
+          SizedBox(
+            width: Dimens.minMarginApplication,
+          ),
+          FloatingActionButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/ui/notifications");
+              },
+              child: Icon(
+                Icons.notifications_rounded,
+                color: OwnerColors.colorPrimaryDark,
+                size: 24,
+              ),
+              backgroundColor: Colors.white,
+              mini: true),
+        ],
+        ),
+        SizedBox(
+          height: Dimens.marginApplication,
+        ),
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       child: TextField(
+        //         controller: queryController,
+        //         decoration: InputDecoration(
+        //           focusedBorder: OutlineInputBorder(
+        //             borderSide: BorderSide(
+        //                 color: OwnerColors.colorPrimary, width: 1.5),
+        //           ),
+        //           enabledBorder: OutlineInputBorder(
+        //             borderSide:
+        //                 BorderSide(color: Colors.grey, width: 1.0),
+        //           ),
+        //           hintText: 'Pesquisar pelo nome ou código...',
+        //           hintStyle: TextStyle(color: Colors.grey),
+        //           border: OutlineInputBorder(
+        //             borderRadius:
+        //                 BorderRadius.circular(Dimens.radiusApplication),
+        //             borderSide: BorderSide.none,
+        //           ),
+        //           filled: true,
+        //           fillColor: Colors.white,
+        //           contentPadding:
+        //               EdgeInsets.all(Dimens.textFieldPaddingApplication),
+        //         ),
+        //         keyboardType: TextInputType.text,
+        //         style: TextStyle(
+        //           color: Colors.grey,
+        //           fontSize: Dimens.textSize5,
+        //         ),
+        //       ),
+        //     ),
+        //     SizedBox(width: Dimens.marginApplication),
+        //     Expanded(
+        //       flex: 0,
+        //       child: Container(
+        //           margin: EdgeInsets.all(2),
+        //           child: InkWell(
+        //               onTap: () {
+        //                 listAll(queryController.text.toString());
+        //               },
+        //               child: Card(
+        //                 shape: RoundedRectangleBorder(
+        //                   borderRadius: BorderRadius.circular(
+        //                       Dimens.minRadiusApplication),
+        //                 ),
+        //                 color: Colors.white,
+        //                 child: Padding(
+        //                   padding: EdgeInsets.all(
+        //                       Dimens.minPaddingApplication),
+        //                   child: Icon(Icons.search,
+        //                       size: 30,
+        //                       color: OwnerColors.colorPrimaryDark),
+        //                 ),
+        //               ))),
+        //     ),
+        //   ],
+        // ),
+        ]),)
+    ,
+    ]
+    )
+    );
   }
 /*
   Future<void> _goToTheLake() async {
