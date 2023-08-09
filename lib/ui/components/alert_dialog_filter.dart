@@ -56,6 +56,42 @@ class _FilterAlertDialogState extends State<FilterAlertDialog> {
                               Navigator.of(context).pop();
                             },
                           )),
+
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                widget.speciesController.text = "";
+                                widget.localController.text = "";
+                                widget.managementController.text = "";
+                                widget.nbhController.text = "";
+
+                              });
+                            },
+                            child: Card(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.circular(Dimens
+                                      .minRadiusApplication),
+                                ),
+                                child: Container(
+                                    padding: EdgeInsets.all(Dimens
+                                        .minPaddingApplication),
+                                    child: Text(
+                                      "Limpar filtros",
+                                      style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize:
+                                        Dimens.textSize5,
+                                        color: OwnerColors.colorPrimaryDark,
+                                      ),
+                                    ))),
+                          ),
+                        ),
+                      ),
                       Text(
                         "Filtro avançado",
                         style: TextStyle(
