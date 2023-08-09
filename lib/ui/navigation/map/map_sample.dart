@@ -153,6 +153,7 @@ class MapSampleState extends State<MapSample> {
       var body = {};
 
       // if (query != "") {
+
         body = {
           "especie": speciesController.text,
           "local": localController.text,
@@ -284,6 +285,31 @@ class MapSampleState extends State<MapSample> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: Styles().styleDefaultButton,
+                        onPressed: () {
+                          setState(() {
+                            speciesController.text = "";
+                            localController.text = "";
+                            managementController.text = "";
+                            nbhController.text = "";
+
+                            mMarkers.clear();
+                          });
+                        },
+                        child: Text("Limpar filtros",
+                            style: Styles().styleDefaultTextButton),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: Dimens.marginApplication,
+                  ),
                   FloatingActionButton(
                       onPressed: () async {
                         final result = await showModalBottomSheet<dynamic>(
@@ -312,7 +338,7 @@ class MapSampleState extends State<MapSample> {
                       backgroundColor: Colors.white,
                       mini: true),
                   SizedBox(
-                    width: Dimens.marginApplication,
+                    width: Dimens.minMarginApplication,
                   ),
                   FloatingActionButton(
                       onPressed: () {

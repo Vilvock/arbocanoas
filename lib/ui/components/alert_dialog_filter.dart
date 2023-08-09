@@ -191,6 +191,13 @@ class _FilterAlertDialogState extends State<FilterAlertDialog> {
                         child: ElevatedButton(
                           style: Styles().styleDefaultButton,
                           onPressed: () {
+                            if (widget.speciesController.text.isEmpty &&
+                                widget.localController.text.isEmpty &&
+                                widget.managementController.text.isEmpty &&
+                                widget.nbhController.text.isEmpty) {
+                              return;
+                            }
+
                             Navigator.of(context).pop(true);
                           },
                           child: Text("Filtrar",
