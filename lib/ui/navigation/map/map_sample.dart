@@ -155,19 +155,26 @@ class MapSampleState extends State<MapSample> {
     try {
       var body = {};
 
-      // if (query != "") {
+      if (codeController.text != "") {
 
       body = {
-        "especie": speciesController.text,
-        "local": localController.text,
-        "manejo": managementController.text,
-        "bairro": nbhController.text,
+        // "especie": speciesController.text,
+        // "local": localController.text,
+        // "manejo": managementController.text,
+        // "bairro": nbhController.text,
         "codigo": codeController.text,
         "token": ApplicationConstant.TOKEN
       };
-      // } else {
-      //   body = {"token": ApplicationConstant.TOKEN};
-      // }
+      } else {
+        body = {
+          "especie": speciesController.text,
+          "local": localController.text,
+          "manejo": managementController.text,
+          "bairro": nbhController.text,
+          // "codigo": codeController.text,
+          "token": ApplicationConstant.TOKEN
+        };
+      }
 
       print('HTTP_BODY: $body');
 
