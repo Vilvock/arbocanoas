@@ -6,6 +6,9 @@ import '../../res/dimens.dart';
 import '../../res/styles.dart';
 
 class FilterAlertDialog extends StatefulWidget {
+
+
+  TextEditingController codeController;
   TextEditingController speciesController;
   TextEditingController localController;
   TextEditingController managementController;
@@ -13,6 +16,7 @@ class FilterAlertDialog extends StatefulWidget {
 
   FilterAlertDialog(
       {Key? key,
+        required this.codeController,
       required this.speciesController,
       required this.localController,
       required this.managementController,
@@ -31,7 +35,7 @@ class _FilterAlertDialogState extends State<FilterAlertDialog> {
   @override
   Widget build(BuildContext context) {
 
-    if (widget.speciesController.text != "" || widget.localController.text != "" || widget.managementController.text != "" || widget.nbhController.text != "") {
+    if (widget.codeController.text != "" || widget.speciesController.text != "" || widget.localController.text != "" || widget.managementController.text != "" || widget.nbhController.text != "") {
 
       isShowingFilter = true;
 
@@ -75,6 +79,7 @@ class _FilterAlertDialogState extends State<FilterAlertDialog> {
                           child: InkWell(
                             onTap: () {
                               setState(() {
+                                widget.codeController.text = "";
                                 widget.speciesController.text = "";
                                 widget.localController.text = "";
                                 widget.managementController.text = "";
@@ -112,6 +117,36 @@ class _FilterAlertDialogState extends State<FilterAlertDialog> {
                             fontFamily: 'Inter',
                             color: Colors.white,
                             fontWeight: FontWeight.w900),
+                      ),
+                      SizedBox(height: Dimens.marginApplication),
+                      TextField(
+                        controller: widget.codeController,
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: OwnerColors.colorPrimary, width: 1.5),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                            BorderSide(color: Colors.grey, width: 1.0),
+                          ),
+                          hintText: 'Código',
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                            BorderRadius.circular(Dimens.radiusApplication),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: EdgeInsets.all(
+                              Dimens.textFieldPaddingApplication),
+                        ),
+                        keyboardType: TextInputType.text,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: Dimens.textSize5,
+                        ),
                       ),
                       SizedBox(height: Dimens.marginApplication),
                       TextField(
@@ -240,7 +275,8 @@ class _FilterAlertDialogState extends State<FilterAlertDialog> {
                         child: ElevatedButton(
                           style: Styles().styleDefaultButton,
                           onPressed: () {
-                            if (widget.speciesController.text.isEmpty &&
+                            if (widget.codeController.text.isEmpty &&
+                                widget.speciesController.text.isEmpty &&
                                 widget.localController.text.isEmpty &&
                                 widget.managementController.text.isEmpty &&
                                 widget.nbhController.text.isEmpty) {

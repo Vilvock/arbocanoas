@@ -41,6 +41,8 @@ class MapSampleState extends State<MapSample> {
 
   final TextEditingController queryController = TextEditingController();
 
+
+  final TextEditingController codeController = TextEditingController();
   final TextEditingController speciesController = TextEditingController();
   final TextEditingController localController = TextEditingController();
   final TextEditingController managementController = TextEditingController();
@@ -59,6 +61,7 @@ class MapSampleState extends State<MapSample> {
   void dispose() {
     queryController.dispose();
 
+    codeController.dispose();
     speciesController.dispose();
     localController.dispose();
     managementController.dispose();
@@ -159,6 +162,7 @@ class MapSampleState extends State<MapSample> {
         "local": localController.text,
         "manejo": managementController.text,
         "bairro": nbhController.text,
+        "codigo": codeController.text,
         "token": ApplicationConstant.TOKEN
       };
       // } else {
@@ -298,6 +302,7 @@ class MapSampleState extends State<MapSample> {
                           clipBehavior: Clip.antiAliasWithSaveLayer,
                           builder: (BuildContext context) {
                             return FilterAlertDialog(
+                              codeController: codeController,
                               speciesController: speciesController,
                               localController: localController,
                               managementController: managementController,
